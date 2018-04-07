@@ -1,5 +1,9 @@
-from flask import Flask,render_template
+from flask import Flask, flash, redirect, render_template, \
+     request, url_for
+	 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+
 
 @app.route('/index/')
 @app.route('/index/<name>')
@@ -21,21 +25,26 @@ def show_post(post_id):
     # show the post with the given id, the id is an integer
     return 'Post %d' % post_id
 	
-@app.route('/projects/')
-def projects():
-    return 'The project page'
 
 @app.route('/about')
 def about():
-    return 'The about page'
+    return render_template('about.html')
 	
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if request.method == 'POST':
-        do_the_login()
-    else:
-        show_the_login_form()
+        if request.form['username'] != 'admin' or \
+                request.form['password'] != 'secret':
+            error = 'Invalid credentials'
+        else:
+            flash('You were successfully logged in')
+            return redirect(url_for('about'))
+    return render_template('login.html', error=error)
 
-
+@app.errorhandler(404) 
+def page_not_found(error): 
+    return 'sorry that is my 404'
+	
 if __name__ == "__main__":
     app.run(host='127.0.0.1',port=8080)

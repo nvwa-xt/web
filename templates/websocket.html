@@ -1,0 +1,14 @@
+<script type="text/javascript" src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var send = function () {
+        var msg = document.querySelector("input").value;
+        socket.emit('my event', {data: msg});
+    };
+    socket.on('res', function (msg) {
+        document.querySelector(".content").insertAdjacentHTML(
+            "beforeend",
+            "<div class='message-div'><span class='message-content'>" + msg.data + "</span></div>"
+        )
+    })
+</script>
