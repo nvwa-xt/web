@@ -5,7 +5,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 
 
-DATABASE = '/tmp/flaskr.db'
+DATABASE = 'flaskr.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
@@ -73,4 +73,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(host='120.24.98.173',port=8181)
+    app.run(host='127.0.0.1',port=8080)
